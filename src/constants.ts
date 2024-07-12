@@ -1,0 +1,1 @@
+export const TURSO_CONNECTION = 'TURSO_CONNECTION';
