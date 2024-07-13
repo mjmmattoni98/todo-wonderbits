@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'todo' })
-export class Todo {
+export class TodoEntity {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
   @Column()
