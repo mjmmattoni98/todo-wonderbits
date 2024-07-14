@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Todo } from './entities/todo.entity';
+import { TodoEntity } from './entities/todo.entity';
 
 @Module({
   imports: [
@@ -11,7 +11,7 @@ import { Todo } from './entities/todo.entity';
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',
-      entities: [Todo],
+      entities: [TodoEntity],
       synchronize: false,
       logging: ['query'],
     }),
