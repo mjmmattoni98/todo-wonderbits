@@ -1,7 +1,7 @@
-import { NewTodoDTO } from "./dto/new-todo.dto";
+import { NewTodoDTO } from "../shared/dto/new-todo.dto";
 
 export interface TodoApplication {
-  createTodo: (newTodo: NewTodoDTO) => Promise<string>;
+  createTodo: (newTodo: NewTodoDTO) => Promise<number>;
   // updateTodo: (id: string, title: string, description: string) => Promise<void>;
   // deleteTodo: (id: string) => Promise<void>;
   // getTodoById: (id: string) => Promise<void>;
