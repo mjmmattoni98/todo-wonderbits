@@ -23,7 +23,7 @@ export class TodoController {
   @Get()
   async getTodos(): Promise<AppResponse> {
     Log.info(`(GET) Get todos`);
-   
+
     return {
       status: 200,
       message: 'Todos retrieved OK',

@@ -1,4 +1,4 @@
-import { NewTodoDTO } from "../shared/dto/new-todo.dto";
+import { NewTodoDTO } from '../shared/dto/new-todo.dto';
 
 export interface TodoApplication {
   createTodo: (newTodo: NewTodoDTO) => Promise<number>;
