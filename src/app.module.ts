@@ -1,22 +1,31 @@
-import { CacheModule } from '@nestjs/cache-manager';
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ScheduleModule } from '@nestjs/schedule';
-import { ThrottlerModule } from '@nestjs/throttler';
-import { DatabaseModule } from 'libs/DatabaseModule';
-import { RequestStorageMiddleware } from 'libs/RequestStorageMiddleware';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseConfig } from './shared/config/database.config';
+import { TodoEntity } from './todo/infrastructure/entities/todo.entity';
 import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
-    DatabaseModule,
-    CacheModule.register({ isGlobal: true }),
-    ThrottlerModule.forRoot(),
+    ConfigModule,
+    TypeOrmModule.forRootAsync({
+      useFactory: (config: ConfigService) => {
+        const database = config.get<DatabaseConfig>('database');
+        return {
+          type: 'postgres',
+          url: database.url,
+          ssl: true,
+          entities: [TodoEntity],
+          synchronize: false,
+          logging: ['query'],
+        };
+      },
+      inject: [ConfigService],
+    }),
+    // CacheModule.register({ isGlobal: true }),
+    // ThrottlerModule.forRoot(),
     TodoModule,
-    ScheduleModule.forRoot(),
+    // ScheduleModule.forRoot(),
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RequestStorageMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}

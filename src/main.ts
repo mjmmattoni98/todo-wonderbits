@@ -6,8 +6,6 @@ import compression from 'compression';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ServerConfig } from './infraestructure/shared/config/server.config';
-import { LoggingInterceptor } from 'libs/LoggingInterceptor';
-import { HttpExceptionFilter } from 'libs/HttpExceptionFilter';
 
 function getServerConfig(app: INestApplication): ServerConfig {
   const config: ConfigService = app.get(ConfigService);
@@ -33,8 +31,6 @@ async function bootstrap() {
   app.use(helmet());
   app.use(compression());
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new LoggingInterceptor());
-  app.useGlobalFilters(new HttpExceptionFilter());
   const config = getServerConfig(app);
   setupSwagger(app);
   await app.listen(config.port);
