@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { EntityId } from 'libs/DatabaseModule';
 
-import { FindNotificationResult } from 'src/notification/application/query/FindNotificationResult';
+import { FindNotificationResult } from 'src/todo/application/query/FindNotificationResult';
 
 class Notification {
   @ApiProperty({ example: new EntityId() })

@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 
-import { EmailAdaptorImplement } from 'src/notification/infrastructure/adaptor/EmailAdaptorImplement';
-import { TodoRepositoryImplement } from 'src/notification/infrastructure/repository/TodoRepositoryImplement';
-import { TodoQueryImplement } from 'src/notification/infrastructure/query/TodoQueryImplement';
+import { EmailAdaptorImplement } from 'src/todo/infrastructure/adaptor/EmailAdaptorImplement';
+import { TodoRepositoryImplement } from 'src/todo/infrastructure/repository/TodoRepositoryImplement';
+import { TodoQueryImplement } from 'src/todo/infrastructure/query/TodoQueryImplement';
 
-import { TodoIntegrationController } from 'src/notification/interface/TodoIntegrationController';
-import { TodoController } from 'src/notification/interface/TodoController';
+import { TodoIntegrationController } from 'src/todo/interface/TodoIntegrationController';
+import { TodoController } from 'src/todo/interface/TodoController';
 
-import { SendEmailHandler } from 'src/notification/application/command/SendEmailHandler';
-import { InjectionToken } from 'src/notification/application/InjectionToken';
-import { FindTodoHandler } from 'src/notification/application/query/FindTodoHandler';
+import { SendEmailHandler } from 'src/todo/application/command/SendEmailHandler';
+import { InjectionToken } from 'src/todo/application/InjectionToken';
+import { FindTodoHandler } from 'src/todo/application/query/FindTodoHandler';
 
-import { TodoFactory } from 'src/notification/domain/TodoFactory';
+import { TodoFactory } from 'src/todo/domain/TodoFactory';
 
 const infrastructure = [
   {
