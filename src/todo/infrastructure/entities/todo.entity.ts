@@ -14,6 +14,4 @@ export class TodoEntity {
   updatedAt: Date;
   @Column({ name: 'deleted_at' })
   deletedAt: Date;
-  // @Column({ name: 'user_id' })
-  // userId: string;
 }

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CompleteTodoHandler } from './application/command/complete-todo.handler';
 import { CreateTodoHandler } from './application/command/create-todo.handler';
 import { GetTodoByIdHandler } from './application/query/get-todo-by-id.handler';
 import { GetTodosHandler } from './application/query/get-todos.handler';
@@ -15,6 +16,7 @@ import { TodoController } from './interface/todo.controller';
     TodoRepository,
     GetTodoByIdHandler,
     CreateTodoHandler,
+    CompleteTodoHandler,
   ],
   controllers: [TodoController],
 })

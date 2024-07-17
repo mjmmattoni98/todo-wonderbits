@@ -22,4 +22,11 @@ export class TodoRepository {
   async findAll() {
     return this.repository.find();
   }
+
+  async completeTodo(id: number) {
+    return this.repository.update(id, {
+      isCompleted: true,
+      updatedAt: new Date(),
+    });
+  }
 }
