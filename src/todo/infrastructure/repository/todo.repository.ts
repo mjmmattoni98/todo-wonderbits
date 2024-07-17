@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Todo } from 'src/todo/domain/todo';
 import { Repository } from 'typeorm';
 import { TodoEntity } from '../entities/todo.entity';
 
@@ -10,14 +9,14 @@ export class TodoRepository {
     @InjectRepository(TodoEntity) private repository: Repository<TodoEntity>,
   ) {}
 
-  save(todo: Todo) {
+  save(title: string) {
     return this.repository.save({
-      title: todo.title,
-      isCompleted: todo.isCompleted,
-      createdAt: todo.createdAt,
-      updatedAt: todo.updatedAt,
-      deletedAt: todo.deletedAt,
+      title: title,
     });
+  }
+
+  async findById(id: number) {
+    return this.repository.findOneBy({ id: id });
   }
 
   async findAll() {

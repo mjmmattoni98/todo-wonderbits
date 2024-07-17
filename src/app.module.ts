@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './shared/config/database.config';
+import { SharedModule } from './shared/shared.module';
 import { TodoEntity } from './todo/infrastructure/entities/todo.entity';
 import { TodoModule } from './todo/todo.module';
 
@@ -9,6 +10,7 @@ import { TodoModule } from './todo/todo.module';
   imports: [
     ConfigModule,
     TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
       useFactory: (config: ConfigService) => {
         const database = config.get<DatabaseConfig>('database');
         return {
@@ -22,10 +24,8 @@ import { TodoModule } from './todo/todo.module';
       },
       inject: [ConfigService],
     }),
-    // CacheModule.register({ isGlobal: true }),
-    // ThrottlerModule.forRoot(),
     TodoModule,
-    // ScheduleModule.forRoot(),
+    SharedModule,
   ],
 })
 export class AppModule {}

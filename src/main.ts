@@ -2,10 +2,9 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import compression from 'compression';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { ServerConfig } from './infraestructure/shared/config/server.config';
+import { ServerConfig } from './shared/config/server.config';
 
 function getServerConfig(app: INestApplication): ServerConfig {
   const config: ConfigService = app.get(ConfigService);
@@ -29,7 +28,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.use(helmet());
-  app.use(compression());
   app.useGlobalPipes(new ValidationPipe());
   const config = getServerConfig(app);
   setupSwagger(app);
