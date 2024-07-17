@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { TodoEntity } from '../entities/todo.entity';
 
 @Injectable()
@@ -23,9 +23,22 @@ export class TodoRepository {
     return this.repository.find();
   }
 
+  async findActive() {
+    return this.repository.find({
+      where: { deletedAt: IsNull() },
+    });
+  }
+
   async completeTodo(id: number) {
     return this.repository.update(id, {
       isCompleted: true,
+      updatedAt: new Date(),
+    });
+  }
+
+  async delete(id: number) {
+    return this.repository.update(id, {
+      deletedAt: new Date(),
       updatedAt: new Date(),
     });
   }

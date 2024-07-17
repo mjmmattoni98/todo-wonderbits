@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -11,7 +12,9 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CompleteTodoCommand } from '../application/command/complete-todo.command';
 import { CreateTodoCommand } from '../application/command/create-todo.command';
+import { DeleteTodoCommand } from '../application/command/delete-todo.command';
 import { GetTodoByIdQuery } from '../application/query/get-todo-by-id.query';
+import { GetTodosActiveQuery } from '../application/query/get-todos-active.query';
 import { GetTodosQuery } from '../application/query/get-todos.query';
 import { TodoEntity } from '../infrastructure/entities/todo.entity';
 import { CreateTodoDto } from './dto/create-todo.dto';
@@ -22,6 +25,12 @@ import { TodoDto } from './dto/todo.dto';
 export class TodoController {
   @Inject() private readonly queryBus: QueryBus;
   @Inject() private readonly commandBus: CommandBus;
+
+  @Get('active')
+  @ApiOkResponse({ type: [TodoDto] })
+  getActiveTodos(): Promise<TodoEntity[]> {
+    return this.queryBus.execute(new GetTodosActiveQuery());
+  }
 
   @Get(':id')
   @ApiOkResponse({ type: TodoDto })
@@ -45,5 +54,11 @@ export class TodoController {
   @ApiOkResponse({ type: TodoDto })
   completeTodoById(@Param('id') id: string): Promise<TodoEntity> {
     return this.commandBus.execute(new CompleteTodoCommand(parseInt(id)));
+  }
+
+  @Delete(':id')
+  @ApiOkResponse({ type: TodoDto })
+  deleteTodoById(@Param('id') id: string): Promise<TodoEntity> {
+    return this.commandBus.execute(new DeleteTodoCommand(parseInt(id)));
   }
 }
